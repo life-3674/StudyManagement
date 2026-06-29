@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h2>勉強時間グラフ</h2>
+<p>合計時間：{{total_hours}}</p>
+<!--<canve>はグラフを描くための領域 -->
+<canvas id="chart" width="400" height="200"></canvas>
+
+<script>
+
+const daily_hours = JSON.parse('{{ daily_hours | tojson | safe }}');
+// tojsonはpythonのリストをjavascriptに変換するもの // safeはHtmlのエスケープを防ぐ
+new Chart(document.getElementById("chart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: Object.keys(daily_hours),
+
+        datasets: [{
+
+            label: "勉強時間（時間）",
+
+            data: Object.values(daily_hours),
+
+            backgroundColor: "rgba(54, 162, 235, 0.5)",
+
+            borderColor: "rgba(54, 162, 235, 1)",
+
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+<br>
+<a href="/">戻る</a>
+
+
+    
+</body>
+</html>
